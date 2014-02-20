@@ -36,9 +36,7 @@
 
     (dolist (elt (hide-ifdef-conf-list-project root))
       (hide-ifdef-conf-load-project (concat root elt))
-      (push elt projects)
-      )
-
+      (add-to-list 'projects elt))
     projects)
   )
 
@@ -51,10 +49,10 @@ return the `list' of project"
 	   (null (string-equal hide-ifdef-conf-project-test (car elt)))
 	   (null (car (cdr elt)))
 	   )
-	  (push (car elt) project))
-      )
+	(add-to-list 'project (car elt))))
     project)
   )
+;; (hide-ifdef-conf-list-project hide-ifdef-conf-root)
 
 (defun hide-ifdef-conf-load-project (project)
   "load ifdef from project which is filepath"
@@ -78,8 +76,7 @@ return the `list' of project"
 
       (setq model (cons (intern (file-name-nondirectory project)) nil))
       (setcdr model (dolist (elt result feature)
-		      (if (null (member (intern (car elt)) feature))
-			  (push (intern (car elt)) feature))))
+		      (add-to-list 'feature (intern (car elt)) t)))
       (push model hide-ifdef-define-alist))
     model)
   )
