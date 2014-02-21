@@ -23,6 +23,9 @@
 ;; and M-x hide-ifdef-conf-load
 ;; 
 ;; -----------------------------------------------------------------------------
+;; 2014.02.21
+;; directory-files - use regexp for excluding hidden files.
+;; -----------------------------------------------------------------------------
 ;; 2014.02.20, 
 ;; add feature files in the root directory
 ;; ~/.emacs.d/hideif/
@@ -72,11 +75,9 @@
   "listup project list under root directory
 project is files and directory"
   (let (project-list)
-    (dolist (elt (directory-files root) project-list)
+    (dolist (elt (directory-files root nil "^[^.]+") project-list)
       (if (and
 	   (null (string-equal elt hide-ifdef-conf-project-test))
-	   (null (string-equal elt "."))
-	   (null (string-equal elt ".."))
 	   )
 	  (add-to-list 'project-list elt)))
     ))
@@ -87,10 +88,8 @@ if project is directory, all files in the directory is loaded"
 
   (if (file-regular-p project)
       (hide-ifdef-conf-load-feature (intern (file-name-nondirectory project)) project)
-    (dolist (elt (directory-files project t))
+    (dolist (elt (directory-files project t "^[^.]+"))
       (if (and
-	   (null (string-equal (file-name-nondirectory elt) "."))
-	   (null (string-equal (file-name-nondirectory elt) ".."))
 	   )
 	  (hide-ifdef-conf-load-feature (intern (file-name-nondirectory elt)) elt))
       )
@@ -105,10 +104,10 @@ if project is directory, all files in the directory is loaded"
 
     (setq inputs (with-temp-buffer
 		   (insert-file-contents-literally feature)
-		   (split-string (buffer-string) "\r\n" t)))
+		   (split-string (buffer-string) "[\r\n]+" t)))
 
     (dolist (elt inputs defines-string)
-      (add-to-list 'defines-string (split-string elt " " t)))
+      (add-to-list 'defines-string (split-string elt "[ \t]" t)))
 
     (setq project-defines (assoc project hide-ifdef-define-alist))
     (when (null project-defines)
@@ -123,5 +122,5 @@ if project is directory, all files in the directory is loaded"
 	  (if (null (member define (cdr project-defines)))
 	      (nconc (cdr project-defines) (cons define nil)))))
       )
-    )
+    project-defines)
   )
