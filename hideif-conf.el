@@ -89,9 +89,7 @@ if project is directory, all files in the directory is loaded"
   (if (file-regular-p project)
       (hide-ifdef-conf-load-feature (intern (file-name-nondirectory project)) project)
     (dolist (elt (directory-files project t "^[^.]+"))
-      (if (and
-	   )
-	  (hide-ifdef-conf-load-feature (intern (file-name-nondirectory elt)) elt))
+      (hide-ifdef-conf-load-feature (intern (file-name-nondirectory project)) elt)
       )
     )
   )
