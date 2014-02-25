@@ -122,3 +122,5 @@ if project is directory, all files in the directory is loaded"
       )
     project-defines)
   )
+
+(provide 'hideif-conf)
