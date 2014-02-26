@@ -2,12 +2,12 @@
 
 ;; Copyright (C) 2014 SEONGBAEK KANG
 
-;; Author: SEONGBAEK KANG <asinwolf@gmail.com>
+;; Author: SEONGBAEK KANG
 ;; Maintainer:
 ;; Created: 20 Feb 2014
 ;; Keywords: c, `hideif'
 ;; Package-Version:
-;; Package-Requires: ((hideif "24.3.1"))
+;; Package-Requires:
 
 ;; This file is not part of GNU Emacs.
 
