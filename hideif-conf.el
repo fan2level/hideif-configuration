@@ -73,7 +73,7 @@
 (defvar hide-ifdef-conf-root nil
   "root directory of hideif configuration")
 
-(defcustom hide-ifdef-conf-project-test "test"
+(defconst hide-ifdef-conf-project-test "test"
   "test project of hideif configuration")
 
 (defun hide-ifdef-conf-load (&optional root)
